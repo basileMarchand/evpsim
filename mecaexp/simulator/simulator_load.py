@@ -19,7 +19,7 @@ class SimuLoad(object):
     _sig_comp = ("sig11", "sig22", "sig33", "sig12",
                  "sig23", "sig31", "sig21", "sig32", "sig13")
     _tensor_indices = ((0, 0), (1, 1), (2, 2), (0, 1),
-                       (1, 2), (2, 0), (1, 0), (2, 1), (0, 1))
+                       (1, 2), (2, 0), (1, 0), (2, 1), (0, 2))
 
     def __init__(self):
         self._interp_x_data = {key: [0.]
@@ -60,7 +60,7 @@ class SimuLoad(object):
         keys.remove("cyc")
         return keys
 
-    def addComponent(self, var: str, times: np.array, values: np.array, repeat: int = 1) -> None:
+    def addComponent(self, var: str, times: np.array, values: np.array, repeat: int = 1, last=False) -> None:
         if not var in SimuLoad._sig_comp + SimuLoad._eto_comp:
             raise ValueError(
                 "Please provide a stress or a strain component to load.")
@@ -113,9 +113,9 @@ class SimuLoad(object):
                                         fill_value=(0., self._interp_y_data[var][-1]))
 
         idx = extract_indices(var)
-        if idx[0] != idx[1]:
+        if idx[0] != idx[1] and not last:
             vname = var[:-2]+f"{idx[1]}{idx[0]}"
-            self.addComponent(vname, times, values, repeat)
+            self.addComponent(vname, times, values, repeat, True)
 
     def cycle(self, time):
         return self._cycs(time)
