@@ -1,0 +1,106 @@
+import numpy as np
+from enum import Enum
+
+MathType = Enum("MathType", ["Scalar", "Tensor1",
+                "Tensor2", "Tensor3", "Tensor4"])
+VarStatus = Enum("VarType", ["Vin", "Vout", "Vint", "Vaux"])
+
+ARRAY_SHAPE = {MathType.Scalar: (1, 1), MathType.Tensor1: (3,), MathType.Tensor2: (
+    3, 3), MathType.Tensor3: (3, 3, 3), MathType.Tensor4: (3, 3, 3, 3)}
+
+
+class StateVariable:
+    __slots__ = ("_name", "_value", "_rate", "_type", "_status", "_start_pos")
+
+    def __init__(self, math_type_: MathType, var_type_: VarStatus):
+        self._name = ""
+        self._value = None
+        self._rate = None
+        # self._ini = None
+        self._type = math_type_
+        self._status = var_type_
+        self._start_pos = None
+
+        self.initialize()
+
+    def shape(self):
+        return ARRAY_SHAPE[self._type]
+
+    def size(self):
+        return np.prod(self.shape())
+
+    def initialize(self):
+        shape = self.shape()
+        # self._ini = np.zeros(shape)
+        self._value = np.zeros(shape)
+        self._rate = np.zeros(shape)
+
+    @property
+    def start_pos(self):
+        return self._start_pos
+
+    @start_pos.setter
+    def start_pos(self, idx):
+        self._start_pos = idx
+
+    @property
+    def status(self):
+        return self._status
+
+    @property
+    def type(self):
+        return self._type
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, n):
+        self._name = n
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, x):
+        if self._type == MathType.Scalar:
+            assert(isinstance(x, float) or isinstance(x, int) or isinstance(x, np.ndarray))
+        elif self._type == MathType.Tensor2:
+            assert(x.shape[0] == 3 and x.shape[1] == 3)
+        elif self._type == MathType.Tensor3:
+            assert(x.shape[0] == 3 and x.shape[1] == 3 and x.shape[2] == 3)
+        elif self._type == MathType.Tensor4:
+            assert(x.shape[0] == 3 and x.shape[1] ==
+                   3 and x.shape[2] == 3 and x.shape[3] == 3)
+
+        self._value = x
+
+    @property
+    def rate(self):
+        return self._rate
+
+    @rate.setter
+    def rate(self, x):
+        if self._type == MathType.Scalar:
+            assert(isinstance(x, float) or isinstance(x, int) or isinstance(x, np.ndarray))
+            if isinstance(x, float) or isinstance(x, int):
+                x = np.array([[x]])
+        elif self._type == MathType.Tensor2:
+            assert(x.shape[0] == 3 and x.shape[1] == 3)
+        elif self._type == MathType.Tensor3:
+            assert(x.shape[0] == 3 and x.shape[1] == 3 and x.shape[2] == 3)
+        elif self._type == MathType.Tensor4:
+            assert(x.shape[0] == 3 and x.shape[1] ==
+                   3 and x.shape[2] == 3 and x.shape[3] == 3)
+
+        self._rate = x
+
+    def fill_value_from_vector(self, y: np.ndarray) -> None:
+        self.value = y[self._start_pos:self._start_pos+self.size()].reshape( self.shape() )
+
+    def fill_vector_from_rate(self, y: np.ndarray) -> None:
+        y[self._start_pos:self._start_pos+self.size()] = self._rate.ravel()
+
+        
