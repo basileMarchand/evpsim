@@ -89,8 +89,6 @@ class StateVariable:
     def rate(self, x):
         if self._type == MathType.Scalar:
             assert(isinstance(x, float) or isinstance(x, int) or isinstance(x, np.ndarray))
-            if isinstance(x, float) or isinstance(x, int):
-                x = np.array([[x]])
         elif self._type == MathType.Tensor2:
             assert(x.shape[0] == 3 and x.shape[1] == 3)
         elif self._type == MathType.Tensor3:
@@ -99,7 +97,7 @@ class StateVariable:
             assert(x.shape[0] == 3 and x.shape[1] ==
                    3 and x.shape[2] == 3 and x.shape[3] == 3)
 
-        self._rate = x
+        self._rate[:] = x
 
     def fill_value_from_vector(self, y: np.ndarray) -> None:
         self.value = y[self._start_pos:self._start_pos+self._size].reshape( self.shape() )

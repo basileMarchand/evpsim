@@ -4,6 +4,8 @@ from mecaexp.behavior.base_classes import KinematicHardening
 from mecaexp.tools import StateVariable, MathType, VarStatus
 import mecaexp.tools.tenalg as tn
 
+C_23 = 2./3.
+
 
 class LinearKinematicHardening(KinematicHardening):
     def __init__(self, C: float):
@@ -11,7 +13,7 @@ class LinearKinematicHardening(KinematicHardening):
         super().__init__()
 
     def compute_X(self) -> np.ndarray:
-        return 2./3. * self._coeff_c * self.alpha.value
+        return C_23 * self._coeff_c * self.alpha.value
 
     def dalpha(self, dep: np.ndarray, epcum_rate: float) -> None:
         self.alpha.rate = dep
@@ -24,7 +26,7 @@ class NonLinearKinematicHardening(KinematicHardening):
         super().__init__()
 
     def compute_X(self) -> np.ndarray:
-        return 2./3. * self._coeff_c * self.alpha.value
+        return C_23 * self._coeff_c * self.alpha.value
 
     def dalpha(self, dep: np.ndarray, epcum_rate: float) -> None:
         self.alpha.rate = dep - self._coeff_d*epcum_rate*self.alpha.value
