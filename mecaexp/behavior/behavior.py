@@ -63,7 +63,7 @@ class Behavior(BaseMagic):
 
         self.derive()
 
-        dy_dt = np.zeros_like(y)
+        dy_dt = np.zeros(y.shape)
         for _, var in self._all_variables.items():
             if var.status == VarStatus.Vint:
                 var.fill_vector_from_rate(dy_dt)

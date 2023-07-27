@@ -10,7 +10,7 @@ ARRAY_SHAPE = {MathType.Scalar: (1, 1), MathType.Tensor1: (3,), MathType.Tensor2
 
 
 class StateVariable:
-    __slots__ = ("_name", "_value", "_rate", "_type", "_status", "_start_pos")
+    __slots__ = ("_name", "_value", "_rate", "_type", "_status", "_start_pos", "_size", "_shape")
 
     def __init__(self, math_type_: MathType, var_type_: VarStatus):
         self._name = ""
@@ -20,17 +20,21 @@ class StateVariable:
         self._type = math_type_
         self._status = var_type_
         self._start_pos = None
+        self._size = None
+        self._shape = None
 
         self.initialize()
 
     def shape(self):
-        return ARRAY_SHAPE[self._type]
+        return self._shape
 
     def size(self):
-        return np.prod(self.shape())
+        return self._size
 
     def initialize(self):
-        shape = self.shape()
+        shape = ARRAY_SHAPE[self._type]
+        self._size = np.prod(shape)
+        self._shape = shape
         # self._ini = np.zeros(shape)
         self._value = np.zeros(shape)
         self._rate = np.zeros(shape)
@@ -98,9 +102,9 @@ class StateVariable:
         self._rate = x
 
     def fill_value_from_vector(self, y: np.ndarray) -> None:
-        self.value = y[self._start_pos:self._start_pos+self.size()].reshape( self.shape() )
+        self.value = y[self._start_pos:self._start_pos+self._size].reshape( self.shape() )
 
     def fill_vector_from_rate(self, y: np.ndarray) -> None:
-        y[self._start_pos:self._start_pos+self.size()] = self._rate.ravel()
+        y[self._start_pos:self._start_pos+self._size] = self._rate.ravel()
 
         

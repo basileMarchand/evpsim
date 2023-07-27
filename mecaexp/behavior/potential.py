@@ -23,15 +23,14 @@ class PotentialEVP(Potential):
             kin.link_to(self)
 
     def derive(self, sig: np.ndarray) -> np.ndarray:
-        X = np.zeros_like(sig)
-        X = 0.
+        X = np.zeros((3, 3))
         for kin in self.kinematics:
             X += kin.compute_X()
 
         seq = self.criterion.sigma_eq(sig - X)
         R = self.R0 + self.isotropic.R(self.epcum.value)
 
-        dep = np.zeros_like(sig)
+        dep = np.zeros((3, 3))
         if seq - R <= 0.:
             self.epcum.rate = 0.
             dep[:, :] = 0.

@@ -26,7 +26,7 @@ class GeneralizedElastoViscoPlastic(Behavior):
     def derive(self) -> None:
         self.sig.value = np.einsum(
             "ijkl,kl->ij", self.elasticity, self.eel.value)
-        dep = np.zeros_like(self.sig.value)
+        dep = np.zeros((3, 3))
         for pot in self.potentials:
             dep += pot.derive(self.sig.value)
 
