@@ -24,8 +24,11 @@ class IsotropicHardening(BaseMagic):
 class KinematicHardening(BaseMagic):
     alpha = StateVariable(MathType.Tensor2, VarStatus.Vint)
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, suffix=""):
+        rename = {}
+        if suffix != "":
+            rename["alpha"] = f"alpha{suffix}"
+        super().__init__(rename=rename)
 
     def compute_X(self) -> np.ndarray:
         raise NotImplementedError()

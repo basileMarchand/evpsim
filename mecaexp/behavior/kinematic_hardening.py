@@ -8,9 +8,9 @@ C_23 = 2./3.
 
 
 class LinearKinematicHardening(KinematicHardening):
-    def __init__(self, C: float):
+    def __init__(self, C: float, suffix=""):
         self._coeff_c = C
-        super().__init__()
+        super().__init__(suffix=suffix)
 
     def compute_X(self) -> np.ndarray:
         return C_23 * self._coeff_c * self.alpha.value
@@ -20,10 +20,10 @@ class LinearKinematicHardening(KinematicHardening):
 
 
 class NonLinearKinematicHardening(KinematicHardening):
-    def __init__(self, C: float, D: float):
+    def __init__(self, C: float, D: float, suffix=""):
         self._coeff_c = C
         self._coeff_d = D
-        super().__init__()
+        super().__init__(suffix=suffix)
 
     def compute_X(self) -> np.ndarray:
         return C_23 * self._coeff_c * self.alpha.value

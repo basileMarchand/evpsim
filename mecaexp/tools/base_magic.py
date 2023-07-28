@@ -37,16 +37,24 @@ class MetaMagic(type):
 
 
 class BaseMagic(metaclass=MetaMagic):
-    def __init__(self):
-        instance_var = {name: copy.deepcopy(
+    def __init__(self, rename=None):
+        self._instance_var = {name: copy.deepcopy(
             value) for name, value in self._variables.items()}
-        self._variables = instance_var
-
-        self._all_variables = self._variables.copy()
-
-        self._variables = instance_var
-        for key, value in self._variables.items():
+        for key, value in self._instance_var.items():
             setattr(self, key, value)
 
+        if rename:
+            for key, value in rename.items():
+                var = self._instance_var[key]
+                var.name = value
+                self._instance_var[value] = var
+                del self._instance_var[key]
+
+        self._all_variables = self._instance_var.copy()
+
     def link_to(self, parent):
+        for key in self._all_variables.keys():
+            if key in parent._all_variables.keys():
+                raise Exception(
+                    "A variable {key} already registered in {parent}, you need to rename it I thing")
         parent._all_variables.update(self._all_variables)
