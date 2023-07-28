@@ -38,5 +38,11 @@ class KinematicHardening(BaseMagic):
 
 
 class Potential(BaseMagic):
+    def __init__(self, name="ep"):
+        rename = {}
+        if name != "ep":
+            rename["epcum"] = f"{name}cum"
+        super().__init__(rename=rename)
+
     def derive(self, sig: np.ndarray) -> np.ndarray:
         raise NotImplementedError()

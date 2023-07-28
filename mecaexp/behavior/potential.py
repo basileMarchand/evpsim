@@ -9,8 +9,8 @@ class PotentialEVP(Potential):
     # Variables
     epcum = StateVariable(MathType.Scalar, VarStatus.Vint)
 
-    def __init__(self, R0, criterion: Criterion, flow: Flow, isotropic: IsotropicHardening, kinematics: List[KinematicHardening]):
-        super().__init__()
+    def __init__(self, R0, criterion: Criterion, flow: Flow, isotropic: IsotropicHardening, kinematics: List[KinematicHardening], name="ep"):
+        super().__init__(name=name)
         self.R0 = R0
         self.criterion = criterion
         self.criterion.link_to(self)
