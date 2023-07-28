@@ -6,7 +6,6 @@ class Behavior(BaseMagic):
 
     def __init__(self):
         super().__init__()
-        self.compute_var_positions()
 
         self._rate_saved = {}
 

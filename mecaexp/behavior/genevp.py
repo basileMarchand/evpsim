@@ -15,13 +15,13 @@ class GeneralizedElastoViscoPlastic(Behavior):
     eel = StateVariable(MathType.Tensor2, VarStatus.Vint)
 
     def __init__(self, elasticity, potentials: List[Potential]):
-
+        super().__init__()
         self.elasticity = elasticity
         self.potentials = potentials
         for pot in self.potentials:
             pot.link_to(self)
 
-        super().__init__()
+        self.compute_var_positions()
 
     def derive(self) -> None:
         self.sig.value = np.einsum(
