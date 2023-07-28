@@ -103,7 +103,10 @@ class MaterialSimulator(object):
         self._statev_history = np.zeros((nb_steps, nbvars))
         self._last_statev = np.zeros((nbvars,))
 
-    def compute(self):
+    def compute(self, method="lm", options=None):
+
+        if options is None:
+            options = {"xtol": 1.e-2}
 
         self.setup()
 
@@ -128,7 +131,7 @@ class MaterialSimulator(object):
             # Newton algorithm to find dstrain values associated to free stress componenents
             xInit = np.zeros(self._load.nbUnkownStrain())
             out = root(self._mat.func, jac=self._mat.dfunc,
-                       x0=xInit, tol=1.e-20)
+                       x0=xInit, method=method, options=options)
             # Evaluate for the strain increment
             unknown_dstrain = out.x
             self._mat.func(unknown_dstrain, save=True)
