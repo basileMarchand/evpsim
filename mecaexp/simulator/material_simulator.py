@@ -11,6 +11,7 @@ class MaterialWrapper(object):
         self._behavior = behavior
         self.vint = None
         self.stress = None
+        self.imposed_stress = None
         self.strain = None
         self.dstrain = None
         self.noel = 1
@@ -43,7 +44,8 @@ class MaterialWrapper(object):
             self.strain[:, :] = strain[:] + dstrain[:]
             self.vint[:] = out.y[:, -1].ravel()
             self.dstrain[:, :] = dstrain[:, :]
-        return (self.rMatrix @ stress.reshape((-1, 1))).ravel()
+        stress_diff = stress - self.imposed_stress
+        return (self.rMatrix @ stress_diff.reshape((-1, 1))).ravel()
 
     def dfunc(self, x):
         ddsdde = self._behavior.elasticity.reshape((9, 9))
@@ -122,6 +124,7 @@ class MaterialSimulator(object):
             print(f"Compute step {t0} -> {t1}")
             self._mat.time = np.array([t0, t1])
             dstrain = self._load.deto(t0, self._dtime)
+            self._mat.imposed_stress = self._load.sig(t1)
             # Set variables
             self._mat.stress = self._last_stress.copy()
             self._mat.vint = self._last_statev.copy()

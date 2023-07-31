@@ -11,7 +11,7 @@ def extract_indices(var_name: str) -> tuple:
 
 
 class SimuLoad(object):
-    """Utility class to define a loading path for UMAT and Z-mat computation 
+    """Utility class to define a loading path for UMAT and Z-mat computation
 
     """
     _eto_comp = ("eto11", "eto22", "eto33", "eto12",
@@ -136,9 +136,20 @@ class SimuLoad(object):
                         float("{:.8f}".format(time)))
         return _eto
 
+    def sig(self, time: float) -> np.ndarray:
+        _sig = np.zeros((3, 3))
+        for idx, comp in zip(self._tensor_indices, self._sig_comp):
+            if comp in self._functions.keys():
+                try:
+                    _sig[idx[0], idx[1]] = self._functions[comp](time)
+                except ValueError:
+                    _sig[idx[0], idx[1]] = self._functions[comp](
+                        float("{:.8f}".format(time)))
+        return _sig
+
     def getRestrictionMatrix(self) -> np.array:
         ntens = 9
-        neto = len(self._functions.keys())
+        neto = len([x for x in self._functions.keys() if x.startswith("eto")])
         proj_matrix = np.zeros((ntens-neto, ntens))
         incr = 0
         for idx, comp in zip(self._tensor_indices, self._eto_comp):
