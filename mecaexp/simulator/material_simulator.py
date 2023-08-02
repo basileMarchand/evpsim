@@ -57,8 +57,10 @@ class MaterialWrapper(object):
         return (self.rMatrix @ stress_diff.reshape((-1, 1))).ravel()
 
     def dfunc(self, x):
-        ddsdde = self._behavior.elasticity.reshape((9, 9))
-        return self.rMatrix @ ddsdde @ self.rMatrix.T
+        ddsdde = self._behavior.elasticity
+        if self._local:
+            ddsdde = self._local.rotate_tensor4_from_material(ddsdde)
+        return self.rMatrix @ ddsdde.reshape((9, 9)) @ self.rMatrix.T
 
 
 class MaterialSimulator(object):
