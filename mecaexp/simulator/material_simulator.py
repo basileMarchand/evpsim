@@ -69,6 +69,7 @@ class MaterialSimulator(object):
         self._freq = 1
         self._cycs = set([0])
         self._mask = set()
+        self._local = None
 
     def setDTime(self, dtime):
         self._dtime = dtime
