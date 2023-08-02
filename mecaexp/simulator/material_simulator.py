@@ -3,12 +3,14 @@ from scipy.integrate import solve_ivp
 import numpy as np
 
 from mecaexp.simulator.simulator_load import SimuLoad
+from mecaexp.simulator.rotation import LocalFrame
 from mecaexp.behavior import Behavior
 
 
 class MaterialWrapper(object):
     def __init__(self, behavior: Behavior):
         self._behavior = behavior
+        self._local = None
         self.vint = None
         self.stress = None
         self.imposed_stress = None
@@ -29,6 +31,10 @@ class MaterialWrapper(object):
         dstrain = self.dstrain.copy()
         dstrain.ravel()[self.free_stress_idx] = x
 
+        if self._local:
+            strain = self._local.rotate_tensor2_to_material(strain)
+            dstrain = self._local.rotate_tensor2_to_material(dstrain)
+
         self._behavior.eto.value = strain
         self._behavior.eto.rate = dstrain / self.dtime
         self._behavior.times = (self.time[0], self.dtime)
@@ -38,6 +44,9 @@ class MaterialWrapper(object):
                         method="RK23", t_eval=self.time, rtol=1.e-6, atol=1.e-9)
 
         stress = self._behavior.sig.value[:]
+
+        if self._local:
+            stress = self._local.rotate_tensor2_from_material(stress)
 
         if save is True:
             self.stress[:, :] = stress
@@ -89,6 +98,9 @@ class MaterialSimulator(object):
     def setLoad(self, load: SimuLoad):
         self._load = load
 
+    def setLocalFrame(self, local: LocalFrame):
+        self._local = local
+
     def setMaterial(self, mat: Behavior):
         self._mat = MaterialWrapper(mat)
 
@@ -115,6 +127,8 @@ class MaterialSimulator(object):
         self._mat.rMatrix = self._load.getRestrictionMatrix()
         self._mat.free_stress_idx = self._load.getDrivenStress()
         self._mat.dtime = self._dtime
+        if self._local:
+            self._mat._local = self._local
 
         time = [0.]
         cycs = [self._load.cycle(0.)]
