@@ -1,6 +1,6 @@
 import numpy as np
-from mecaexp.tools import BaseMagic
-from mecaexp.tools import StateVariable, MathType, VarStatus
+from evpsim.tools import BaseMagic
+from evpsim.tools import StateVariable, MathType, VarStatus
 
 
 class Criterion(BaseMagic):

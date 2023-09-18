@@ -1,6 +1,6 @@
 import numpy as np
 
-from mecaexp.behavior.base_classes import IsotropicHardening
+from evpsim.behavior.base_classes import IsotropicHardening
 
 class NoneIsotropicHardening(IsotropicHardening):
     def __init__(self, H: float):

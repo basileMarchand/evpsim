@@ -2,11 +2,11 @@
 from typing import List
 import numpy as np
 
-from mecaexp.behavior import Behavior
-from mecaexp.behavior.base_classes import Potential
+from evpsim.behavior import Behavior
+from evpsim.behavior.base_classes import Potential
 
 
-from mecaexp.tools import StateVariable, MathType, VarStatus, BaseMagic
+from evpsim.tools import StateVariable, MathType, VarStatus, BaseMagic
 
 
 class GeneralizedElastoViscoPlastic(Behavior):

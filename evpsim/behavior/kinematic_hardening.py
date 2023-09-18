@@ -1,8 +1,8 @@
 import numpy as np
 
-from mecaexp.behavior.base_classes import KinematicHardening
-from mecaexp.tools import StateVariable, MathType, VarStatus
-import mecaexp.tools.tenalg as tn
+from evpsim.behavior.base_classes import KinematicHardening
+from evpsim.tools import StateVariable, MathType, VarStatus
+import evpsim.tools.tenalg as tn
 
 C_23 = 2./3.
 

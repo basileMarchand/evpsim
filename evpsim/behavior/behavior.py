@@ -1,5 +1,5 @@
 import numpy as np
-from mecaexp.tools import BaseMagic, VarStatus
+from evpsim.tools import BaseMagic, VarStatus
 
 
 class Behavior(BaseMagic):

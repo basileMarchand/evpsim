@@ -1,8 +1,8 @@
 import numpy as np
 import math
 
-from mecaexp.behavior.base_classes import Flow
-import mecaexp.tools.tenalg as tn
+from evpsim.behavior.base_classes import Flow
+import evpsim.tools.tenalg as tn
 
 
 class NortonFlow(Flow):

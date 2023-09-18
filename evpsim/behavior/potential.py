@@ -1,8 +1,8 @@
 from typing import List
 import numpy as np
 
-from mecaexp.behavior.base_classes import Potential, Criterion, Flow, IsotropicHardening, KinematicHardening
-from mecaexp.tools import StateVariable, MathType, VarStatus
+from evpsim.behavior.base_classes import Potential, Criterion, Flow, IsotropicHardening, KinematicHardening
+from evpsim.tools import StateVariable, MathType, VarStatus
 
 
 class PotentialEVP(Potential):

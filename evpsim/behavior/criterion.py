@@ -1,7 +1,7 @@
 import numpy as np
 
-from mecaexp.behavior.base_classes import Criterion
-import mecaexp.tools.tenalg as tn
+from evpsim.behavior.base_classes import Criterion
+import evpsim.tools.tenalg as tn
 
 
 class MisesCriterion(Criterion):

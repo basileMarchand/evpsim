@@ -2,9 +2,9 @@ from scipy.optimize import root
 from scipy.integrate import solve_ivp
 import numpy as np
 
-from mecaexp.simulator.simulator_load import SimuLoad
-from mecaexp.simulator.rotation import LocalFrame
-from mecaexp.behavior import Behavior
+from evpsim.simulator.simulator_load import SimuLoad
+from evpsim.simulator.rotation import LocalFrame
+from evpsim.behavior import Behavior
 
 
 class MaterialWrapper(object):
