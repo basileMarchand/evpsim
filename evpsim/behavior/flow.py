@@ -1,5 +1,5 @@
 import numpy as np
-import math 
+import math
 
 from mecaexp.behavior.base_classes import Flow
 import mecaexp.tools.tenalg as tn
@@ -13,5 +13,11 @@ class NortonFlow(Flow):
 
     def rate(self, seff: np.ndarray) -> float:
         return math.pow(seff*self._coeff_k_inv, self._coeff_n)
-    
-    
+
+
+class PlasticFlow(Flow):
+    def __init__(self):
+        super().__init__()
+
+    def rate(self, seff: np.ndarray) -> float:
+        return seff*1.e-1
