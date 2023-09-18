@@ -47,6 +47,8 @@ class MaterialWrapper(object):
 
         if self._local:
             stress = self._local.rotate_tensor2_from_material(stress)
+            strain = self._local.rotate_tensor2_from_material(strain)
+            dstrain = self._local.rotate_tensor2_from_material(dstrain)
 
         if save is True:
             self.stress[:, :] = stress
@@ -138,7 +140,7 @@ class MaterialSimulator(object):
         output = 1
 
         for i, (t0, t1) in enumerate(zip(self._timedis[:-1], self._timedis[1:]), start=1):
-            print(f"Compute step {t0} -> {t1}")
+            #print(f"Compute step {t0} -> {t1}")
             self._mat.time = np.array([t0, t1])
             dstrain = self._load.deto(t0, self._dtime)
             self._mat.imposed_stress = self._load.sig(t1)
