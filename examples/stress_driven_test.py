@@ -2,15 +2,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_ivp
 
-from mecaexp.behavior.criterion import MisesCriterion
-from mecaexp.behavior.flow import NortonFlow
-from mecaexp.behavior.isotropic_hardening import LinearIsotropicHardening
-from mecaexp.behavior.kinematic_hardening import LinearKinematicHardening, NonLinearKinematicHardening
-from mecaexp.behavior.potential import PotentialEVP
-from mecaexp.behavior.genevp import GeneralizedElastoViscoPlastic
-from mecaexp.tools.elasticity_helper import isotropic_elasticity
+from evpsim.behavior.criterion import MisesCriterion
+from evpsim.behavior.flow import NortonFlow
+from evpsim.behavior.isotropic_hardening import LinearIsotropicHardening
+from evpsim.behavior.kinematic_hardening import LinearKinematicHardening, NonLinearKinematicHardening
+from evpsim.behavior.potential import PotentialEVP
+from evpsim.behavior.genevp import GeneralizedElastoViscoPlastic
+from evpsim.tools.elasticity_helper import isotropic_elasticity
 
-from mecaexp.simulator import SimuLoad, MaterialSimulator, MaterialWrapper
+from evpsim.simulator import SimuLoad, MaterialSimulator, MaterialWrapper
 
 criterion = MisesCriterion()
 flow = NortonFlow(100., 1.)

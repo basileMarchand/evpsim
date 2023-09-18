@@ -2,15 +2,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_ivp
 
-from mecaexp.behavior.criterion import MisesCriterion
-from mecaexp.behavior.flow import NortonFlow
-from mecaexp.behavior.isotropic_hardening import LinearIsotropicHardening
-from mecaexp.behavior.kinematic_hardening import LinearKinematicHardening, NonLinearKinematicHardening
-from mecaexp.behavior.potential import PotentialEVP
-from mecaexp.behavior.genevp import GeneralizedElastoViscoPlastic
-from mecaexp.tools.elasticity_helper import transverse_elasticity
+from evpsim.behavior.criterion import MisesCriterion
+from evpsim.behavior.flow import NortonFlow
+from evpsim.behavior.isotropic_hardening import LinearIsotropicHardening
+from evpsim.behavior.kinematic_hardening import LinearKinematicHardening, NonLinearKinematicHardening
+from evpsim.behavior.potential import PotentialEVP
+from evpsim.behavior.genevp import GeneralizedElastoViscoPlastic
+from evpsim.tools.elasticity_helper import isotropic_elasticity
 
-from mecaexp.simulator import SimuLoad, MaterialSimulator, LocalFrame
+from evpsim.simulator import SimuLoad, MaterialSimulator, MaterialWrapper
 
 criterion = MisesCriterion()
 flow = NortonFlow(100., 1.)
@@ -25,7 +25,7 @@ flow2 = NortonFlow(1000., 10.)
 iso2 = LinearIsotropicHardening(0.)
 pot2 = PotentialEVP(0., criterion2, flow2, iso2, [], name="ev")
 
-elas = transverse_elasticity(160_000., 200_000., 0.3, 0.3, 80_000.)
+elas = isotropic_elasticity(110000., 0.3)
 beha = GeneralizedElastoViscoPlastic(elas, [pot, pot2])
 
 load = SimuLoad()
@@ -48,17 +48,13 @@ for i in range(jump):
     load.addComponent('eto11', (0., time_end), (eto_start, eto_end))
     eto_start = eto_end
 
-
-local = LocalFrame(np.array([1., 1., 0.]), np.array([-1., 1., 0.]))
+load.addComponent('eto11', (0., 0.25), (eto_start, 0))
 
 
 simu = MaterialSimulator()
-simu.setDTime(1./100.)
+simu.setDTime(1./1000.)
 simu.setMaterial(beha)
 simu.setLoad(load)
-
-
-simu.setLocalFrame( local )
 #simu.outputCycles([x for x in range(100)])
 _ = simu.updateOutputShapes()
 
