@@ -16,6 +16,12 @@ cd evpsim
 pip install .
 ```
 
+Or even simplier
+
+```bash
+pip install git+https://github.com/basileMarchand/evpsim.git
+```
+
 ### From PyPi
 
 Coming soon
