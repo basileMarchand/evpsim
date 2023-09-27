@@ -47,9 +47,5 @@ setup(
     install_requires=requirements,
     extras_require=extras_require,
     packages=find_packages(),
-    include_package_data=True,
-    package_data={"": ["*.svg"]},
-    entry_points={
-        'console_scripts': ['rcmat=rcmat.gui:main'],
-    }
+    include_package_data=True
 )
