@@ -2,3 +2,6 @@ numpy
 scipy 
 matplotlib 
 numba 
+
+sphinx
+sphinx-book-theme
