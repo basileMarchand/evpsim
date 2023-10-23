@@ -39,10 +39,11 @@ jobs:
         pip install build
     - name: Build package
       run: python -m build
-    - name: Publish package
+    - name: Publish package 📦️ on PyPi Test
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
         password: ${{ secrets.PYPI_TEST_API_TOKEN }}
         verbose: true
+        skip_existing: true
         repository-url: https://test.pypi.org/legacy/
