@@ -42,7 +42,11 @@ setup(
     license="",
     url="",
     classifiers=[
-        'Development Status :: 1 - Beta',
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Education',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Topic :: Scientific/Engineering'
     ],
     install_requires=requirements,
     extras_require=extras_require,
