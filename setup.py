@@ -39,7 +39,7 @@ setup(
     author_email=contact,
     description="Python ElastoViscoPlastic mechanical behavior simulator",
     long_description=long_description,
-    long_description_content_type="text/markdown"
+    long_description_content_type="text/markdown",
     license="GNU General Public License v3 (GPLv3)",
     url="",
     classifiers=[
