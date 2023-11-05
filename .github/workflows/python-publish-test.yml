@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Upload Python Package
+name: Test Upload Python Package
 
 on:
   release:
@@ -41,11 +41,3 @@ jobs:
         verbose: true
         skip-existing: true
         repository-url: https://test.pypi.org/legacy/
-    - name: Publish package 📦️ on PyPi 
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
-        verbose: true
-        skip-existing: true
-        repository-url: https://upload.pypi.org/legacy/
