@@ -48,4 +48,4 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
         verbose: true
         skip-existing: true
-        repository-url: https://pypi.org/p/evpsim/
+        repository-url: https://upload.pypi.org/legacy/
