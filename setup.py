@@ -28,7 +28,7 @@ with open(here / pl.Path("requirements.txt")) as fid:
             requirements.append(line)
 
 with open(here / pl.Path("README.md")) as fid:
-    long_description = fid.read()
+    long_description = fid.read_text()
 
 extras_require = {'test': ['pytest', ]}
 
