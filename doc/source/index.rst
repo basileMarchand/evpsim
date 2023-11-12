@@ -6,6 +6,9 @@
 ElastoViscoPlastic material SIMulator
 =====================================
 
+Description
+-----------
+
 The evpsim module simulates elasto-visco-plastic mechanical behavior for a given loading path (strain/stress/mixed).
 
 .. math::
@@ -17,6 +20,9 @@ It would be conceivable to couple the evpsim module with a finite element
 code for structural calculations, but this would require some work to reorganize the code, 
 particularly in terms of memory management. 
 What's more, it would still be prohibitively expensive in terms of calculation costs compared with a dedicated implementation.
+
+Documentation
+-------------
 
 
 .. toctree::
