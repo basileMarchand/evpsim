@@ -28,8 +28,12 @@ pip install git+https://github.com/basileMarchand/evpsim.git
 
 ### From PyPi
 
-Coming soon
+EVPSim is now available on PyPi
+
+```
+pip install evpsim
+```
 
 ## Documentation
 
-Coming soon
+The dangerously incomplete documentation is available [here](https://evpsim.readthedocs.io/en/latest/)
