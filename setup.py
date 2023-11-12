@@ -39,10 +39,15 @@ setup(
     author_email=contact,
     description="Python ElastoViscoPlastic mechanical behavior simulator",
     long_description=long_description,
-    license="",
+    long_description_content_type="text/markdown",
+    license="GNU General Public License v3 (GPLv3)",
     url="",
     classifiers=[
-        'Development Status :: 1 - Beta',
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Education',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Topic :: Scientific/Engineering'
     ],
     install_requires=requirements,
     extras_require=extras_require,
